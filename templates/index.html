@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}내 메모{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>내 메모</h2>
+  {% if notes %}
+    <ul class="note-list">
+      {% for n in notes %}
+        <li><a href="{{ url_for('view_note', note_uuid=n.uuid) }}">{{ n.title }}</a>
+            <small>·</small>
+            <a href="{{ url_for('edit_note', note_uuid=n.uuid) }}">편집</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>메모가 없습니다. <a href="{{ url_for('new_note') }}">새로 만들기</a></p>
+  {% endif %}
+</section>
+{% endblock %}

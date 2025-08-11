@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}메모 작성/수정{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>{% if note %}메모 수정{% else %}새 메모{% endif %}</h2>
+  <form method="post" id="note-form">
+    <label>제목: <input name="title" required value="{{ note.title if note else '' }}"></label><br>
+    <label>내용:<br>
+      <textarea name="content" rows="8">{{ note.content if note else '' }}</textarea>
+    </label><br>
+
+    <div class="acl-container">
+      <h3>ACL 설정</h3>
+      <div class="acl-tabs">
+        <button type="button" class="acl-tab active" data-tab="allow">허용 그룹</button>
+        <button type="button" class="acl-tab" data-tab="block">차단 그룹</button>
+      </div>
+
+      <div id="acl-allow" class="acl-tab-content">
+        <input type="text" id="allow-search" placeholder="사용자 검색 (이름 일부)">
+        <div id="allow-results" class="search-results"></div>
+        <ul id="allow-list" class="acl-list">
+          {% for u in allowed_list %}
+            <li data-username="{{ u }}">{{ u }} <button type="button" class="remove-btn">X</button></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div id="acl-block" class="acl-tab-content hidden">
+        <input type="text" id="block-search" placeholder="사용자 검색 (이름 일부)">
+        <div id="block-results" class="search-results"></div>
+        <ul id="block-list" class="acl-list">
+          {% for u in blocked_list %}
+            <li data-username="{{ u }}">{{ u }} <button type="button" class="remove-btn">X</button></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <input type="hidden" name="allowed_users" id="allowed-users" value="{{ ','.join(allowed_list) if allowed_list else '' }}">
+      <input type="hidden" name="blocked_users" id="blocked-users" value="{{ ','.join(blocked_list) if blocked_list else '' }}">
+    </div>
+
+    <button class="btn" type="submit">저장</button>
+  </form>
+</section>
+{% endblock %}

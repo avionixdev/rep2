@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}회원가입{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>회원가입</h2>
+  <form method="post">
+    <label>사용자명: <input name="username" required></label><br>
+    <label>비밀번호: <input name="password" type="password" required></label><br>
+    <button class="btn" type="submit">가입</button>
+  </form>
+</section>
+{% endblock %}
